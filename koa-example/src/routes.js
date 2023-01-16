@@ -2,6 +2,7 @@ const Router = require('@koa/router');
 const router = new Router();
 
 const { myLogging } = require('./middleware/logging');
+const { verify } = require('./middleware/auth');
 
 //웹 컨트롤러에서 가져오기
 const webController = require('./web/controller');
@@ -15,8 +16,14 @@ router.use(myLogging);
 router.get('/', webController.home);
 router.get('/page/:name', webController.page);
 
-router.get('/api/user/:id', userController.info);
+router.post('/api/user/login', userController.login);
+router.post('/api/user/register', userController.register);
 
+
+//auth 필요한 기능들
+router.use(verify);
+
+router.get('/api/user/:id', userController.info);
 router.get('/api/feed', feedController.index);
 router.post('/api/feed', feedController.store);
 router.get('/api/feed/:id', feedController.show);
