@@ -1,10 +1,15 @@
 const Router = require('@koa/router');
 const router = new Router();
 
+const { myLogging } = require('./middleware/logging');
+
 //웹 컨트롤러에서 가져오기
 const webController = require('./web/controller');
 const userController = require('./api/user/controller');
 const feedController = require('./api/feed/controller');
+
+//어떤 페이지를 들어가든 마이로깅 먼저 하고 동작
+router.use(myLogging);
 
 //가져온 웹 컨트롤러 기존 함수 대신 사용
 router.get('/', webController.home);
