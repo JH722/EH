@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'my-secret-key';
+
 
 exports.info = (ctx,next) => {
   let id = ctx.params.id;
@@ -14,7 +14,7 @@ exports.register = async (ctx, next) => {
 exports.login = async (ctx, next) => {
   let {id,pw} = ctx.request.body;
 
-  
+
   let result = "";
   // 계정이 있을 때 토큰 발급 아니면 에러메시지 출력
   if(id === 'admin' && pw == '1234'){
@@ -27,7 +27,7 @@ exports.login = async (ctx, next) => {
 
 let generateToken = (payload) => {
   return new Promise((resolve,reject) => {
-    jwt.sign(payload, SECRET_KEY,(error,token) => {
+    jwt.sign(payload, process.env.APP_KEY,(error,token) => {
       if(error) {reject(error);}
       resolve(token);
     })
