@@ -1,6 +1,12 @@
 const Router = require('@koa/router');
 const router = new Router();
 
+const multer = require('@koa/multer');
+const path = require('path');
+const upload = multer({
+  dest: path.resolve(__dirname,'../','storage') //현제 디렉토리 한단계 위에 스토리지 파일 만들고 저장할거다
+})
+
 const { myLogging } = require('./middleware/logging');
 const { verify } = require('./middleware/auth');
 
@@ -8,9 +14,12 @@ const { verify } = require('./middleware/auth');
 const webController = require('./web/controller');
 const userController = require('./api/user/controller');
 const feedController = require('./api/feed/controller');
+const apiFileController = require('./api/feed/controller');
 
 //어떤 페이지를 들어가든 마이로깅 먼저 하고 동작
 router.use(myLogging);
+
+router.post('/file/upload', upload.single('file'), require(apiFileController).upload);
 
 //가져온 웹 컨트롤러 기존 함수 대신 사용
 router.get('/', webController.home);
