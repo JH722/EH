@@ -26,8 +26,8 @@ router.get('/file/:id',require('./api/file/controller').download); //download �
 router.get('/', webController.home);
 router.get('/page/:name', webController.page);
 
-router.post('/api/user/login', userController.login);
-router.post('/api/user/register', userController.register);
+router.post('/api/user/login', userController.login);  //로그인
+router.post('/api/user/register', userController.register);  //회원가입
 
 
 //auth 필요한 기능들
