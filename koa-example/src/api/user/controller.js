@@ -10,6 +10,7 @@ exports.info = (ctx,next) => {
 //회원가입
 exports.register = async (ctx, next) => {
   let { email, password, name } = ctx.request.body;
+  let result = crypto.pbkdf2Sync(password, process.env.APP_KEY, 50, 255, 'sha512')
 
   let { affectedRows } = await register(email, password, name);
 
@@ -19,18 +20,19 @@ exports.register = async (ctx, next) => {
   } else {
     ctx.body = {result: "fail"};
   }
-  
 }
 exports.login = async (ctx, next) => {
-  let {id,pw} = ctx.request.body;
+  let { email, password } = ctx.request.body;
+  let result = crypto.pbkdf2Sync(password, process.env.APP_KEY, 50, 255, 'sha512')
 
+  let item = await login(email, result.toString('base64'));
 
-  let result = "";
   // 계정이 있을 때 토큰 발급 아니면 에러메시지 출력
-  if(id === 'admin' && pw == '1234'){
-    result = await generateToken({name: 'abc'});
+  if(item == null){
+    ctx.body = {result: "fail"};
   } else {
-    result = "아이디 혹은 페스워드가 일치하지 않습니다";
+    let token = await generateToken({name: item.name});
+    ctx.body = token;
   }
   ctx.body = result;
 }
