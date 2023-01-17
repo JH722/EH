@@ -19,6 +19,10 @@ const apiFileController = require('./api/file/controller'); //함수 사용시 r
 //어떤 페이지를 들어가든 마이로깅 먼저 하고 동작
 router.use(myLogging);
 
+
+router.post('/file/upload', upload.single('file'), require('./api/file/controller').upload);
+router.get('/file/:id',require('./api/file/controller').download);
+
 router.post('/file/upload', upload.single('file'), require('./api/file/controller').upload);
 
 //가져온 웹 컨트롤러 기존 함수 대신 사용
