@@ -1,7 +1,7 @@
 const { pool } = require('../../data')
 
 /**
- * 회원가입
+ * 회원가입`
  * @param {string} email 
  * @param {string} password 
  * @param {string} name 
