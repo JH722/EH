@@ -1,15 +1,25 @@
 const jwt = require('jsonwebtoken');
+const { register } =require('./query');
 
-
+// 해당 id의 회원정보
 exports.info = (ctx,next) => {
   let id = ctx.params.id;
   ctx.body = `${id} 회원에 대한 정보`;
 }
 
+//회원가입
 exports.register = async (ctx, next) => {
+  let { email, password, name } = ctx.request.body;
 
-  let token = await generateToken({name: 'my-name'});
-  ctx.body = token;
+  let { affectedRows } = await register(email, password, name);
+
+  if(affectedRows > 0) {
+    let token = await generateToken({ name });
+    ctx.body = token;
+  } else {
+    ctx.body = {result: "fail"};
+  }
+  
 }
 exports.login = async (ctx, next) => {
   let {id,pw} = ctx.request.body;

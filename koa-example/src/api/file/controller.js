@@ -6,7 +6,8 @@ const { create,show } = require('./query');
 exports.upload = async ctx => {
   let file = ctx.request.file;
 
-let { affectedRows, insertId } = await pool(query, [file.originalname, file.path, file.size]);
+let { affectedRows, insertId } = await create(file.originalname, file.path, file.size);
+
 if(affectedRows > 0){
   ctx.body = { result: "ok", id: insertId };
 } else {
