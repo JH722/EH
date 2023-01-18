@@ -14,7 +14,7 @@ const { verify } = require('./middleware/auth');
 const webController = require('./web/controller');
 const userController = require('./api/user/controller');
 const feedController = require('./api/feed/controller');
-const apiFileController = require('./api/file/controller'); //함수 사용시 require 자체를 대신 넣어준다
+// const apiFileController = require('./api/file/controller'); //함수 사용시 require 자체를 대신 넣어준다
 
 //어떤 페이지를 들어가든 마이로깅 먼저 하고 동작
 router.use(myLogging);
@@ -33,12 +33,12 @@ router.post('/api/user/register', userController.register);  //회원가입
 //auth 필요한 기능들
 router.use(verify);
 
-router.get('/api/user/:id', userController.info);
-router.get('/api/feed', feedController.index);
-router.post('/api/feed', feedController.store);
-router.get('/api/feed/:id', feedController.show);
-router.put('/api/feed/:id', feedController.update);
-router.delete('/api/feed/:id', feedController.delete);
+router.get('/api/user/:id', userController.info); //유저 정보
+router.get('/api/feed', feedController.index);  //피드 목차, 토큰값 넣기
+router.post('/api/feed', feedController.store); //피드 저장
+router.get('/api/feed/:id', feedController.show); //피드 보기
+router.put('/api/feed/:id', feedController.update); //피드 수정
+router.delete('/api/feed/:id', feedController.delete); //피드 삭제
 
 
 module.exports = router;

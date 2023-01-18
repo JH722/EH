@@ -5,7 +5,6 @@ exports.index = (ctx,next) => {
   // query.count ???
   let { color,size,count } = ctx.query;
   ctx.body = query;
-
 }
 exports.store = (ctx,next) => {
   let body = ctx.request.body
