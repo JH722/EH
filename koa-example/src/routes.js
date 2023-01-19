@@ -30,15 +30,15 @@ router.post('/api/user/login', userController.login);  //로그인
 router.post('/api/user/register', userController.register);  //회원가입
 
 
-//auth 필요한 기능들
+//auth 필요한 기능들 , 헤더에 토큰값 넣어야 기능 수행
 router.use(verify);
 
-router.get('/api/user/:id', userController.info); //유저 정보
-router.get('/api/feed', feedController.index);  //피드 목차, 토큰값 넣기
-router.post('/api/feed', feedController.store); //피드 저장
-router.get('/api/feed/:id', feedController.show); //피드 보기
-router.put('/api/feed/:id', feedController.update); //피드 수정
-router.delete('/api/feed/:id', feedController.delete); //피드 삭제
+router.get('/api/user/:id', userController.info);        //유저 정보 
+router.get('/api/feed', feedController.index);           //피드 목차, 토큰값 넣기
+router.post('/api/feed', feedController.store);          //피드 저장
+router.get('/api/feed/:id', feedController.show);        //피드 보기
+router.put('/api/feed/:id', feedController.update);      //피드 수정
+router.delete('/api/feed/:id', feedController.delete);   //피드 삭제
 
 
 module.exports = router;
